@@ -9,7 +9,8 @@ function App() {
     try {
       const savedTodos = localStorage.getItem("todos");
       if (savedTodos) {
-        return JSON.parse(savedTodos);
+        const parsed = JSON.parse(savedTodos);
+        return Array.isArray(parsed) ? parsed : [];
       }
     } catch (error) {
       console.error("Gagal membaca data dari localStorage:", error);

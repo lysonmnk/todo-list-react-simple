@@ -35,11 +35,16 @@ function TodoForm({ onAdd }) {
           value={text}
           onChange={handleChange}
           maxLength={100}
+          aria-label="Tugas baru"
+          aria-invalid={!!error}
         />
         <button type="submit">Tambah</button>
       </form>
       {error && (
-        <p style={{ color: "#ef4444", fontSize: "13px", margin: "4px 0 0 2px" }}>
+        <p
+          role="alert"
+          style={{ color: "#ef4444", fontSize: "13px", margin: "4px 0 0 2px" }}
+        >
           {error}
         </p>
       )}
