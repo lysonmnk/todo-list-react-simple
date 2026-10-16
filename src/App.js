@@ -1,10 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 import "./App.css";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  // Lazy initial state: membaca localStorage hanya sekali saat komponen pertama kali dimuat
+  const [todos, setTodos] = useState(() => {
+    try {
+      const savedTodos = localStorage.getItem("todos");
+      if (savedTodos) {
+        return JSON.parse(savedTodos);
+      }
+    } catch (error) {
+      console.error("Gagal membaca data dari localStorage:", error);
+    }
+    return [];
+  });
+
+  // Simpan data tugas ke localStorage setiap kali state todos berubah
+  useEffect(() => {
+    try {
+      localStorage.setItem("todos", JSON.stringify(todos));
+    } catch (error) {
+      console.error("Gagal menyimpan data ke localStorage:", error);
+    }
+  }, [todos]);
 
   // Fitur 1: menambah tugas
   const addTodo = (text) => {
